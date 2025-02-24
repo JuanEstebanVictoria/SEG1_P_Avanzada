@@ -39,6 +39,23 @@ public class UserService {
                 .findFirst();
     }
 
+    public Optional<UserResponse> updateUser(String id, @NotNull UserRegistration userRegistration) {
+        for(UserResponse user : users) {
+            if(user.getId().equals(id)) {
+                user.setFullName(userRegistration.getFullName());
+                user.setEmail(userRegistration.getEmail());
+                user.setRol(userRegistration.getRol().getValue());
+                return Optional.of(user);
+
+            }
+        }
+        return Optional.empty();
+    }
+
+    public boolean deleteUser(@NotNull String id) {
+        return users.removeIf(user -> user.getId().equals(id));
+    }
+
 
 
 }

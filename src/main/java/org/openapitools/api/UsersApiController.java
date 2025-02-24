@@ -60,6 +60,22 @@ public class UsersApiController {
                  .orElse(ResponseEntity.notFound().build());
     }
 
+    @PutMapping("/{id}")
+    private ResponseEntity<UserResponse> updateUser(@PathVariable String id, @Valid @RequestBody UserRegistration userUpdate) {
+    return userService.updateUser(id, userUpdate)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+
+
+    }
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Void> deleteUser(@PathVariable String id) {
+        return userService.deleteUser(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+
+
+
+
 
 
 
