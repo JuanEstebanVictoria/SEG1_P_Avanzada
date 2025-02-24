@@ -20,32 +20,23 @@ import jakarta.validation.constraints.*;
 import jakarta.validation.Valid;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import jakarta.annotation.Generated;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2025-02-20T21:07:46.519360700-05:00[America/Bogota]", comments = "Generator version: 7.7.0")
-@Controller
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-public class UsersApiController implements UsersApi {
+public class UsersApiController {
 
-    private final NativeWebRequest request;
+
     private final UserService userService;
 
-
-    //@Autowired
-    //public UsersApiController(NativeWebRequest request) {
-        //this.request = request;
-   // }
-
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return Optional.ofNullable(request);
-    }
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody UserRegistration userRegistration) {
@@ -62,10 +53,12 @@ public class UsersApiController implements UsersApi {
                 .body(usuarioCreado);
     }
 
-
-
-
-
+    @GetMapping("/{id}")
+    public ResponseEntity<UserResponse> getUserById(@PathVariable String id) {
+         return  userService.getUserById(id)
+                 .map(ResponseEntity::ok)
+                 .orElse(ResponseEntity.notFound().build());
+    }
 
 
 
