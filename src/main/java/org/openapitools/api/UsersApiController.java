@@ -73,6 +73,12 @@ public class UsersApiController {
         return userService.deleteUser(id) ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<UserResponse>> getAllUsers(){
+        List<UserResponse> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
 
 
 
